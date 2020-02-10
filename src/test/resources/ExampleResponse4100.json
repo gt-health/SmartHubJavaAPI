@@ -1,0 +1,409 @@
+{
+  "name": "Form 4100 R4.0 (Short)",
+  "slug": "4100_r4_short",
+  "groups": {
+    "byId": {
+      "product": {
+        "name": "Product",
+        "questions": {
+          "byId": {
+            "question1": {
+              "number": 1,
+              "name": "Name of product (for most recent cell therapy infusion)",
+              "type": "RADIO",
+              "autofill": {
+                "default": "other_product",
+                "cases": [
+                  {
+                    "queries": [
+                      {
+                        "field": "evidences.cellular_therapy_infusion.byId.Kymriah.items.value_name",
+                        "operator": "$eq",
+                        "criteria": "Kymriah"
+                      }
+                    ],
+                    "value": "tisagenlecleucel_kymriah"
+                  }
+                ]
+              },
+              "options": [
+                {
+                  "label": "Tisagenlecleucel (Kymriah)",
+                  "value": "tisagenlecleucel_kymriah"
+                },
+                {
+                  "label": "Axicabtagene Ciloleucel (Yescarta)",
+                  "value": "axicabtagene_ciloleucel_yescarta"
+                },
+                {
+                  "label": "Other product",
+                  "value": "other_product"
+                }
+              ],
+              "value": "",
+              "evidence": "cellular_therapy_infusion"
+            }
+          },
+          "allIds": [
+            "question1"
+          ]
+        },
+        "evidences": [
+          "cellular_therapy_infusion"
+        ]
+      },
+      "survival": {
+        "name": "Survival",
+        "questions": {
+          "byId": {
+            "question2": {
+              "number": 2,
+              "name": "Date of actual contact with the recipient to determine medical status for this follow-up report",
+              "type": "TEXT",
+              "validationType": "string",
+              "validations": [
+                {
+                  "type": "required",
+                  "params": [
+                    "This field is required."
+                  ]
+                },
+                {
+                  "type": "min",
+                  "params": [
+                    2,
+                    "Question 2 cannot be less than 2 characters"
+                  ]
+                },
+                {
+                  "type": "max",
+                  "params": [
+                    10,
+                    "Question 2 cannot be more than 10 characters"
+                  ]
+                }
+              ],
+              "value": "",
+              "evidence": null
+            },
+            "question3": {
+              "number": 3,
+              "name": "Specify the recipient's survival status at the date of last contact",
+              "type": "RADIO",
+              "autofill": {
+                "default": "alive",
+                "cases": [
+                  {
+                    "queries": [
+                      {
+                        "field": "evidences.survival.byId.death_terms.items.term",
+                        "operator": "$exists",
+                        "criteria": true
+                      }
+                    ],
+                    "value": "dead"
+                  }
+                ]
+              },
+              "options": [
+                {
+                  "label": "Alive",
+                  "value": "alive"
+                },
+                {
+                  "label": "Dead",
+                  "value": "dead"
+                }
+              ],
+              "value": "",
+              "evidence": "survival"
+            }
+          },
+          "allIds": [
+            "question2",
+            "question3"
+          ]
+        },
+        "evidences": [
+          "survival"
+        ]
+      },
+      "current_hematologic_findings": {
+        "name": "Current Hematologic Findings",
+        "questions": {
+          "byId": {
+            "question19": {
+              "number": 19,
+              "name": "WBC",
+              "type": "RADIO",
+              "autofill": {
+                "default": "unknown",
+                "cases": [
+                  {
+                    "queries": [
+                      {
+                        "operator": "$or",
+                        "clauses": [
+                          {
+                            "field": "evidences.wbc_hematologic_findings.byId.wbc_structured.items.value",
+                            "operator": "$gt",
+                            "criteria": 20
+                          },
+                          {
+                            "field": "evidences.wbc_hematologic_findings.byId.wbc_hematologic_findings_value_extraction.items.value",
+                            "operator": "$gt",
+                            "criteria": 20
+                          }
+                        ]
+                      }
+                    ],
+                    "value": "known"
+                  }
+                ]
+              },
+              "options": [
+                {
+                  "label": "Known",
+                  "value": "known"
+                },
+                {
+                  "label": "Unknown",
+                  "value": "unknown"
+                }
+              ],
+              "value": "",
+              "evidence": "wbc_hematologic_findings"
+            },
+            "question20": {
+              "number": 20,
+              "name": "WBC",
+              "type": "TEXT",
+              "value": "",
+              "evidence": "wbc_hematologic_findings"
+            }
+          },
+          "allIds": [
+            "question19",
+            "question20"
+          ]
+        },
+        "evidences": [
+          "wbc_hematologic_findings"
+        ]
+      }
+    },
+    "allIds": [
+      "product",
+      "survival",
+      "current_hematologic_findings"
+    ]
+  },
+  "evidences": {
+    "cellular_therapy_infusion": {
+      "allIds": [
+        "cart_cell_terms",
+        "Kymriah",
+        "kymriah_terms",
+        "yescarta_terms",
+        "Yescarta",
+        "bb2121_terms"
+      ],
+      "byId": {
+        "cart_cell_terms": {
+          "displayType": "table",
+          "title": "Observations",
+          "subtitle": "structured",
+          "cols": [
+            {
+              "label": "Date",
+              "value": "r.result_display.date"
+            },
+            {
+              "label": "Name",
+              "value": "r.code_coding_0_display"
+            },
+            {
+              "label": "Val",
+              "value": "`${r.valueQuantity_value} ${r.valueQuantity_code}`"
+            }
+          ]
+        },
+        "Kymriah": {
+          "displayType": "cards"
+        },
+        "kymriah_terms": {
+          "displayType": "table",
+          "title": "Observations",
+          "subtitle": "structured",
+          "cols": [
+            {
+              "label": "Date",
+              "value": "r.result_display.date"
+            },
+            {
+              "label": "Name",
+              "value": "r.code_coding_0_display"
+            },
+            {
+              "label": "Val",
+              "value": "`${r.valueQuantity_value} ${r.valueQuantity_code}`"
+            }
+          ]
+        },
+        "yescarta_terms": {
+          "displayType": "table",
+          "title": "Observations",
+          "subtitle": "structured",
+          "cols": [
+            {
+              "label": "Date",
+              "value": "r.result_display.date"
+            },
+            {
+              "label": "Name",
+              "value": "r.code_coding_0_display"
+            },
+            {
+              "label": "Val",
+              "value": "`${r.valueQuantity_value} ${r.valueQuantity_code}`"
+            }
+          ]
+        },
+        "Yescarta": {
+          "displayType": "table",
+          "title": "Observations",
+          "subtitle": "structured",
+          "cols": [
+            {
+              "label": "Date",
+              "value": "r.result_display.date"
+            },
+            {
+              "label": "Name",
+              "value": "r.code_coding_0_display"
+            },
+            {
+              "label": "Val",
+              "value": "`${r.valueQuantity_value} ${r.valueQuantity_code}`"
+            }
+          ]
+        },
+        "bb2121_terms": {
+          "displayType": "table",
+          "title": "Observations",
+          "subtitle": "structured",
+          "cols": [
+            {
+              "label": "Date",
+              "value": "r.result_display.date"
+            },
+            {
+              "label": "Name",
+              "value": "r.code_coding_0_display"
+            },
+            {
+              "label": "Val",
+              "value": "`${r.valueQuantity_value} ${r.valueQuantity_code}`"
+            }
+          ]
+        }
+      }
+    },
+    "survival": {
+      "allIds": [
+        "Survival",
+        "SurvivalObservation",
+        "death_terms"
+      ],
+      "byId": {
+        "Survival": {
+          "displayType": "table",
+          "title": "Observations",
+          "subtitle": "structured",
+          "cols": [
+            {
+              "label": "Date",
+              "value": "r.result_display.date"
+            },
+            {
+              "label": "Name",
+              "value": "r.code_coding_0_display"
+            },
+            {
+              "label": "Val",
+              "value": "`${r.valueQuantity_value} ${r.valueQuantity_code}`"
+            }
+          ]
+        },
+        "SurvivalObservation": {
+          "displayType": "table",
+          "title": "Observations",
+          "subtitle": "structured",
+          "cols": [
+            {
+              "label": "Date",
+              "value": "r.result_display.date"
+            },
+            {
+              "label": "Name",
+              "value": "r.code_coding_0_display"
+            },
+            {
+              "label": "Val",
+              "value": "`${r.valueQuantity_value} ${r.valueQuantity_code}`"
+            }
+          ]
+        },
+        "death_terms": {
+          "displayType": "cards"
+        }
+      }
+    },
+    "wbc_hematologic_findings": {
+      "allIds": [
+        "wbc_structured",
+        "wbc_hematologic_findings_value_extraction"
+      ],
+      "byId": {
+        "wbc_structured": {
+          "displayType": "table",
+          "title": "Observations",
+          "subtitle": "structured",
+          "cols": [
+            {
+              "label": "Date",
+              "value": "r.result_display.date"
+            },
+            {
+              "label": "Name",
+              "value": "r.code_coding_0_display"
+            },
+            {
+              "label": "Val",
+              "value": "`${r.valueQuantity_value} ${r.valueQuantity_code}`"
+            }
+          ]
+        },
+        "wbc_hematologic_findings_value_extraction": {
+          "displayType": "table",
+          "title": "Observations",
+          "subtitle": "value extraction",
+          "cols": [
+            {
+              "label": "Date",
+              "value": "r.result_display.date"
+            },
+            {
+              "label": "Name",
+              "value": "r.text"
+            },
+            {
+              "label": "Val",
+              "value": "r.value"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
