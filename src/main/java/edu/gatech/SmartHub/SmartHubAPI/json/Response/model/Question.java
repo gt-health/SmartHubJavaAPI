@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Question {
 	@JsonProperty("number")
-	private Integer number;
+	private String number;
 	@JsonProperty("name")
 	private String name;
 	@JsonProperty("type")
@@ -15,12 +15,14 @@ public class Question {
 	private Autofill autofill;
 	@JsonProperty("options")
 	private List<Option> options;
-	@JsonProperty("validations")
-	private List<Validation> validations;
-	public Integer getNumber() {
+	@JsonProperty("value")
+	private String value;
+	@JsonProperty("evidence")
+	private String evidence;
+	public String getNumber() {
 		return number;
 	}
-	public void setNumber(Integer number) {
+	public void setNumber(String number) {
 		this.number = number;
 	}
 	public String getName() {
@@ -47,22 +49,30 @@ public class Question {
 	public void setOptions(List<Option> options) {
 		this.options = options;
 	}
-	public List<Validation> getValidations() {
-		return validations;
+	public String getValue() {
+		return value;
 	}
-	public void setValidations(List<Validation> validations) {
-		this.validations = validations;
+	public void setValue(String value) {
+		this.value = value;
 	}
+	public String getEvidence() {
+		return evidence;
+	}
+	public void setEvidence(String evidence) {
+		this.evidence = evidence;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((autofill == null) ? 0 : autofill.hashCode());
+		result = prime * result + ((evidence == null) ? 0 : evidence.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((number == null) ? 0 : number.hashCode());
 		result = prime * result + ((options == null) ? 0 : options.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
-		result = prime * result + ((validations == null) ? 0 : validations.hashCode());
+		result = prime * result + ((value == null) ? 0 : value.hashCode());
 		return result;
 	}
 	@Override
@@ -78,6 +88,11 @@ public class Question {
 			if (other.autofill != null)
 				return false;
 		} else if (!autofill.equals(other.autofill))
+			return false;
+		if (evidence == null) {
+			if (other.evidence != null)
+				return false;
+		} else if (!evidence.equals(other.evidence))
 			return false;
 		if (name == null) {
 			if (other.name != null)
@@ -99,14 +114,13 @@ public class Question {
 				return false;
 		} else if (!type.equals(other.type))
 			return false;
-		if (validations == null) {
-			if (other.validations != null)
+		if (value == null) {
+			if (other.value != null)
 				return false;
-		} else if (!validations.equals(other.validations))
+		} else if (!value.equals(other.value))
 			return false;
 		return true;
 	}
-	
 	@Override
 	public String toString() {
 	    StringBuilder sb = new StringBuilder();
@@ -116,7 +130,8 @@ public class Question {
 	    sb.append("    type: ").append(toIndentedString(type)).append("\n");
 	    sb.append("    autofill: ").append(toIndentedString(autofill)).append("\n");
 	    sb.append("    options: ").append(toIndentedString(options)).append("\n");
-	    sb.append("    validations: ").append(toIndentedString(validations)).append("\n");
+	    sb.append("    value: ").append(toIndentedString(value)).append("\n");
+	    sb.append("    evidence: ").append(toIndentedString(value)).append("\n");
 	    sb.append("}");
 	    return sb.toString();
 	  }

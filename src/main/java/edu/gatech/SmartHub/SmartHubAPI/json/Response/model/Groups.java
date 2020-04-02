@@ -1,5 +1,6 @@
 package edu.gatech.SmartHub.SmartHubAPI.json.Response.model;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -7,14 +8,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Groups {
 	@JsonProperty("byId")
-	private Map<String,Object> byId;
+	private Map<String,Group> byId;
 	@JsonProperty("allIds")
 	private List<String> allIds;
 	
-	public Map<String, Object> getById() {
+	public Map<String, Group> getById() {
 		return byId;
 	}
-	public void setById(Map<String, Object> byId) {
+	public void setById(Map<String, Group> byId) {
 		this.byId = byId;
 	}
 	public List<String> getAllIds() {
@@ -22,6 +23,14 @@ public class Groups {
 	}
 	public void setAllIds(List<String> allIds) {
 		this.allIds = allIds;
+	}
+	
+	public Map<String, String> mapQuestionNamesToValue() {
+		Map<String, String> returnMap = new HashMap<String, String>();
+		for(Group g: byId.values()) {
+			returnMap.putAll(g.mapQuestionNamesToValue());
+		}
+		return returnMap;
 	}
 	@Override
 	public int hashCode() {

@@ -37,6 +37,10 @@ public class Response {
 	public void setEvidences(Map<String, Evidences> evidences) {
 		this.evidences = evidences;
 	}
+	
+	public Map<String, String> mapQuestionNamesToValue() {
+		return groups.mapQuestionNamesToValue();
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;

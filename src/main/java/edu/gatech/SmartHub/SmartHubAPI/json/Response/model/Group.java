@@ -1,6 +1,8 @@
 package edu.gatech.SmartHub.SmartHubAPI.json.Response.model;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -11,6 +13,8 @@ public class Group {
 	private Questions questions;
 	@JsonProperty("evidences")
 	private List<String> evidences;
+	@JsonProperty("isLoaded")
+	private boolean isLoaded;
 	public String getName() {
 		return name;
 	}
@@ -29,11 +33,28 @@ public class Group {
 	public void setEvidences(List<String> evidences) {
 		this.evidences = evidences;
 	}
+	public boolean isLoaded() {
+		return isLoaded;
+	}
+	public void setLoaded(boolean isLoaded) {
+		this.isLoaded = isLoaded;
+	}
+	public Map<String, String> mapQuestionNamesToValue() {
+		Map<String, String> returnMap = new HashMap<String, String>();
+		for(Question q: questions.getById().values()) {
+			if(!q.getValue().isEmpty()) {
+				returnMap.put(q.getName(), q.getValue());
+			}
+		}
+		return returnMap;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((evidences == null) ? 0 : evidences.hashCode());
+		result = prime * result + (isLoaded ? 1231 : 1237);
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((questions == null) ? 0 : questions.hashCode());
 		return result;
@@ -52,6 +73,8 @@ public class Group {
 				return false;
 		} else if (!evidences.equals(other.evidences))
 			return false;
+		if (isLoaded != other.isLoaded)
+			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
@@ -64,7 +87,6 @@ public class Group {
 			return false;
 		return true;
 	}
-	
 	@Override
 	public String toString() {
 	    StringBuilder sb = new StringBuilder();
@@ -72,6 +94,7 @@ public class Group {
 	    sb.append("    name: ").append(toIndentedString(name)).append("\n");
 	    sb.append("    questions: ").append(toIndentedString(questions)).append("\n");
 	    sb.append("    evidences: ").append(toIndentedString(evidences)).append("\n");
+	    sb.append("    isLoaded: ").append(toIndentedString(isLoaded)).append("\n");
 	    sb.append("}");
 	    return sb.toString();
 	  }
